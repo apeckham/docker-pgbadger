@@ -1,16 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-set -ex
+set -eux -o pipefail
 
 : ${DB_INSTANCE_IDENTIFIER?"Need to set DB_INSTANCE_IDENTIFIER"}
 : ${BUCKET?"Need to set BUCKET"}
 : ${AWS_DEFAULT_REGION?"Need to set AWS_DEFAULT_REGION"}
 
 cd /tmp
-        
-aws rds describe-db-log-files --db-instance-identifier $DB_INSTANCE_IDENTIFIER >/tmp/describe-db-log-files.json
 
-FILES=$(cat /tmp/describe-db-log-files.json | jq ".DescribeDBLogFiles[] .LogFileName" --raw-output | tail -5)
+FILES=$(aws rds describe-db-log-files --db-instance-identifier $DB_INSTANCE_IDENTIFIER | \
+  jq ".DescribeDBLogFiles[] .LogFileName" --raw-output | tail -5)
 
 for FILE in $FILES; do
   aws rds download-db-log-file-portion --db-instance-identifier $DB_INSTANCE_IDENTIFIER \

@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt1447182264000",
+            "Effect": "Allow",
+            "Action": [
+                "rds:DescribeDBLogFiles",
+                "rds:DownloadDBLogFilePortion"
+            ],
+            "Resource": [
+                "arn:aws:rds:REGION:XXX:db:ZZZ"
+            ]
+        },
+        {
+            "Sid": "Stmt1447182351000",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl",
+                "s3:ListBucket"
+                ],
+            "Resource": [
+                "arn:aws:s3:::YYY/*",
+                "arn:aws:s3:::YYY"
+            ]
+        }
+    ]
+}

@@ -7,7 +7,7 @@
 cd /tmp
 
 FILES=$(aws rds describe-db-log-files --db-instance-identifier $DB_INSTANCE_IDENTIFIER | \
-  jq ".DescribeDBLogFiles[] .LogFileName" | tail -5)
+  jq ".DescribeDBLogFiles[] .LogFileName" --raw-output | tail -5)
 
 for FILE in $FILES; do  
   aws rds download-db-log-file-portion --db-instance-identifier $DB_INSTANCE_IDENTIFIER \

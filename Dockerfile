@@ -11,4 +11,4 @@ RUN unzip -d /tmp /tmp/pgbadger.zip && \
     mv /tmp/pgbadger-7.1/pgbadger /usr/local/bin
 
 ADD run.sh /
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]

@@ -1,14 +1,14 @@
-FROM phusion/baseimage:0.9.17
+FROM ubuntu:14.04
 
 RUN apt-get update && \
-    apt-get install python-pip unzip jq && \
-    pip install awscli
+    apt-get install -y python-pip unzip jq pv groff less && \
+    pip install awscli && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
                      
 ADD https://github.com/dalibo/pgbadger/archive/v7.1.zip /tmp/pgbadger.zip
-RUN unzip -d /tmp pgbadger.zip && \
-    mv /tmppgbadger-7.1/pgbadger /usr/local/bin
+RUN unzip -d /tmp /tmp/pgbadger.zip && \
+    mv /tmp/pgbadger-7.1/pgbadger /usr/local/bin
 
-RUN echo us-east-1 > /etc/container_environment/AWS_DEFAULT_REGION
-            
 ADD run.sh /
-CMD /run.sh
+CMD ["/run.sh"]

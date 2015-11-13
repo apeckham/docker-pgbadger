@@ -7,6 +7,7 @@ RUN unzip -d /tmp /tmp/pgbadger.zip && \
 
 ENV AWS_REGION us-east-1
 
+RUN mkdir -p /tmp
 ADD app/project.clj /tmp
 RUN cd /tmp && lein deps
 

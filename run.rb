@@ -22,7 +22,9 @@ downloaded_files = files.last(log_file_count).map do |file|
                "--log-file-name", file[:log_file_name]]
 
     puts file[:log_file_name]
-    system "#{Shellwords.shelljoin command} | pv -s #{file[:size]} >#{basename}"
+    Retriable.retriable(tries: 5) do
+      system("#{Shellwords.shelljoin command} | pv -s #{file[:size]} >#{basename}") or raise "rds-download-db-logfile failed"
+    end
   end
 end
 

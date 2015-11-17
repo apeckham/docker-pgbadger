@@ -27,7 +27,7 @@ downloaded_files = files.last(log_file_count).map do |file|
 end
 
 system(*["pgbadger",
-         "-j", Facter.value('processors')['count'],
+         "-j", Facter.value('processors')['count'].to_s,
          "-p", "%t:%r:%u@%d:[%p]:"] + downloaded_files) or raise 'pgbadger failed'
 
 s3 = Aws::S3::Resource.new

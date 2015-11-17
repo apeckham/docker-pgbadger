@@ -1,17 +1,18 @@
-FROM clojure
+FROM cgswong/aws:rds
 
 ADD https://github.com/dalibo/pgbadger/archive/v7.1.zip /tmp/pgbadger.zip
 RUN unzip -d /tmp /tmp/pgbadger.zip && \
     mv /tmp/pgbadger-7.1/pgbadger /usr/local/bin && \
     rm -rf /tmp/pgbadger-7.1
 
-ENV AWS_REGION us-east-1
+RUN echo @testing http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
+    apk --update add pv@testing ruby ruby-dev build-base ca-certificates
 
-RUN mkdir -p /tmp
-ADD app/project.clj /tmp
-RUN cd /tmp && lein deps
+ADD Gemfile Gemfile.lock /tmp/
+RUN cd /tmp && gem install bundler io-console --no-rdoc --no-ri && bundle install
 
-ADD app /app
-WORKDIR /app
+RUN mkdir -p /run
+WORKDIR /run
 
-CMD ["lein", "run"]
+ADD run.rb /run.rb
+ENTRYPOINT ["/run.rb"]

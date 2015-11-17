@@ -5,8 +5,9 @@
             "Sid": "Stmt1447182264000",
             "Effect": "Allow",
             "Action": [
-                "rds:DescribeDBLogFiles",
-                "rds:DownloadDBLogFilePortion"
+                "rds:Describe*",
+                "rds:ListTagsForResource",
+                "rds:Download*"
             ],
             "Resource": [
                 "arn:aws:rds:REGION:XXX:db:ZZZ"
@@ -19,7 +20,7 @@
                 "s3:PutObject",
                 "s3:PutObjectAcl",
                 "s3:ListBucket"
-                ],
+            ],
             "Resource": [
                 "arn:aws:s3:::YYY/*",
                 "arn:aws:s3:::YYY"

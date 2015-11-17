@@ -3,6 +3,7 @@
 require 'aws-sdk'
 require 'shellwords'
 require 'facter'
+require 'retriable'
 
 ENV['DB_INSTANCE_IDENTIFIER'] or raise 'DB_INSTANCE_IDENTIFIER is required'
 ENV['BUCKET'] or raise 'BUCKET is required'

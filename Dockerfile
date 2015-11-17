@@ -6,7 +6,7 @@ RUN unzip -d /tmp /tmp/pgbadger.zip && \
     rm -rf /tmp/pgbadger-7.1
 
 RUN echo @testing http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
-    apk --update add pv@testing ruby ruby-dev build-base ca-certificates
+    apk --update add pv@testing ruby ruby-dev build-base ca-certificates perl
 
 ADD Gemfile Gemfile.lock /tmp/
 RUN cd /tmp && gem install bundler io-console --no-rdoc --no-ri && bundle install

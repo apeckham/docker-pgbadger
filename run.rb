@@ -2,6 +2,7 @@
 
 require 'aws-sdk'
 require 'shellwords'
+require 'facter'
 
 ENV['DB_INSTANCE_IDENTIFIER'] or raise 'DB_INSTANCE_IDENTIFIER is required'
 ENV['BUCKET'] or raise 'BUCKET is required'
@@ -25,9 +26,9 @@ downloaded_files = files.last(log_file_count).map do |file|
   end
 end
 
-p downloaded_files
-
-system(*["pgbadger", "-p", "%t:%r:%u@%d:[%p]:"] + downloaded_files) or raise 'pgbadger failed'
+system(*["pgbadger",
+         "-j", Facter.value('processors')['count'],
+         "-p", "%t:%r:%u@%d:[%p]:"] + downloaded_files) or raise 'pgbadger failed'
 
 s3 = Aws::S3::Resource.new
 obj = s3.bucket(ENV['BUCKET']).object("pgbadger-#{Date.today}.html")

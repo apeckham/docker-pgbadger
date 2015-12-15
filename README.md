@@ -12,3 +12,6 @@ http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.Concepts.Po
 
 # Disable logging on RDS
 ```aws rds modify-db-parameter-group --db-parameter-group-name postgres-custom --parameters "ParameterName=log_min_duration_statement, ParameterValue=-1, ApplyMethod=immediate"```
+
+# Todo
+Pipe logs straight to pgbadger instead of saving them to disk

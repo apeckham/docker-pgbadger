@@ -35,5 +35,8 @@ system(*["pgbadger",
          "-p", "%t:%r:%u@%d:[%p]:"] + downloaded_files) or raise 'pgbadger failed'
 
 s3 = Aws::S3::Resource.new
-obj = s3.bucket(ENV['BUCKET']).object("pgbadger-#{Time.now.strftime("%F-%H-%M-%S")}.html")
+key = "pgbadger-#{Time.now.strftime("%F-%H-%M-%S")}.html"
+obj = s3.bucket(ENV['BUCKET']).object(key)
 obj.upload_file 'out.html', {acl: 'public-read'}
+
+puts "https://s3.amazonaws.com/#{ENV['BUCKET']}/#{key}"

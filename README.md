@@ -9,8 +9,3 @@ http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.Concepts.Po
 # Run
 ```docker build -t pgbadger .```
 ```docker run -t -e AWS_SECRET_ACCESS_KEY -e AWS_ACCESS_KEY_ID -e AWS_DEFAULT_REGION=my-region -e BUCKET=my-bucket -e DB_INSTANCE_IDENTIFIER=my-db-instance-identifier -e LOG_FILE_COUNT=10 -v /mnt:/run pgbadger```
-
-# Todo
-
-- Pipe logs straight to pgbadger instead of saving them to disk
-- Pass flags from docker command to pgbadger (https://github.com/dalibo/pgbadger)

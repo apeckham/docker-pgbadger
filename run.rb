@@ -20,6 +20,7 @@ downloaded_files = files.last(log_file_count).map do |file|
                "--db-instance-identifier", ENV['DB_INSTANCE_IDENTIFIER'],
                "-I", ENV['AWS_ACCESS_KEY_ID'],
                "-S", ENV['AWS_SECRET_ACCESS_KEY'],
+               "--region", ENV['AWS_DEFAULT_REGION'],
                "--log-file-name", file[:log_file_name]]
 
     puts file[:log_file_name]

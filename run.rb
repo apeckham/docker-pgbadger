@@ -24,9 +24,13 @@ downloaded_files = files.last(log_file_count).map do |file|
                "--log-file-name", file[:log_file_name]]
 
     puts file[:log_file_name]
-    Retriable.retriable(tries: 5) do
+    Retriable.retriable(tries: 8) do
       system("#{Shellwords.shelljoin command} >#{basename}") or raise "rds-download-db-logfile failed"
-      raise "#{basename} is empty" if File.size(basename).zero?
+      raise "Expected #{basename} to not be empty" if File.size(basename).zero?
+      
+      if file != files.last && file[:size] != File.size(basename)
+        raise "Expected #{basename} size to be #{file[:size]} but was #{File.size(basename)}"
+      end
     end
   end
 end

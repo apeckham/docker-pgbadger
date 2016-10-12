@@ -6,7 +6,7 @@ RUN unzip -d /tmp /tmp/pgbadger.zip && \
     rm -rf /tmp/pgbadger-7.1 && \
     rm /tmp/pgbadger.zip
 
-RUN apk --update add ruby ruby-dev build-base ca-certificates perl htop iftop
+RUN apk --update add ruby ruby-dev build-base ca-certificates perl htop iftop nload
 
 ADD Gemfile Gemfile.lock /tmp/
 RUN cd /tmp && gem install bundler io-console --no-rdoc --no-ri && bundle install
